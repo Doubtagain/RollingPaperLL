@@ -34,36 +34,35 @@ pnpm lint
 - 카드 손글씨 폰트: Nanum Pen Script (SIL OFL 1.1) — `public/fonts/`. 다른 폰트로 바꾸려면 `src/styles/theme.css` 의 `@font-face` 수정
   - 현재 TTF(약 3MB). 배포 전 woff2 서브셋으로 바꾸는 것을 권장
 
-## 배포 (Cloudflare Pages)
+## 배포 (Cloudflare Workers — 정적 에셋)
 
-### 방법 A — GitHub 연동 (권장)
+### GitHub 연동 (Workers Builds)
 
-1. Cloudflare 대시보드 → Workers & Pages → Create → Pages → **Connect to Git** → 이 레포 선택
+1. Cloudflare 대시보드 → Workers & Pages → 이 레포로 연결된 Worker → Settings → Build
 2. 빌드 설정
-   - Framework preset: `None` (또는 Vite)
    - Build command: `pnpm build`
-   - Build output directory: `dist`
-3. 환경 변수 (Production / Preview 각각)
+   - Deploy command: `npx wrangler deploy`
+3. 환경 변수: Settings → Build → **Build variables** 에 넣을 것 (Vite 가 빌드 시점에 번들에 넣음. Runtime 변수에 넣으면 적용 안 됨)
    - `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`
    - Supabase 없이 데모만 띄우려면 `VITE_USE_MOCK=true`
    - Node 버전은 `.node-version`(22), pnpm 버전은 `package.json` 의 `packageManager` 로 지정됨
 4. 이후 `main` 에 push 하면 자동 배포
 
-### 방법 B — CLI 직접 업로드
+### CLI 직접 배포
 
 ```bash
-pnpm deploy   # = pnpm build && npx wrangler pages deploy dist (처음엔 wrangler login 필요)
+pnpm run deploy   # = pnpm build && npx wrangler deploy (처음엔 npx wrangler login 필요)
 ```
 
-`.env` 의 `VITE_*` 값이 빌드 시점에 번들에 들어가므로, 로컬 `.env` 를 채운 뒤 실행할 것.
+로컬 `.env` 의 `VITE_*` 값이 번들에 들어가므로 `.env` 를 채운 뒤 실행할 것.
 
 ### 포함된 설정 파일
 
-- `public/_redirects` — SPA fallback (`/* /index.html 200`)
+- `wrangler.toml` — `[assets] directory = "./dist"`, `not_found_handling = "single-page-application"` (SPA fallback)
+  - `name` 은 대시보드의 Worker 이름과 같아야 함
 - `public/_headers` — 해시된 에셋 장기 캐시, 기본 보안 헤더
-- `wrangler.toml` — `pages_build_output_dir = "dist"`
 
 ### Supabase 쪽
 
 - Auth → Providers 에서 Kakao 활성화
-- Auth → URL Configuration 에 배포 도메인 추가: Site URL `https://<도메인>`, Redirect URL `https://<도메인>/login` (프리뷰용 `https://*.<프로젝트>.pages.dev/login` 도)
+- Auth → URL Configuration 에 배포 도메인 추가: Site URL `https://<도메인>`, Redirect URL `https://<도메인>/login`

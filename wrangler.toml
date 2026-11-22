@@ -1,4 +1,9 @@
-# Cloudflare Pages 설정 (wrangler pages deploy 또는 Git 연동 시 참조)
-name = "rollingpaper-ll"
-pages_build_output_dir = "dist"
+# Cloudflare Workers (정적 에셋) 배포 설정 — `npx wrangler deploy`
+# name 은 Cloudflare 대시보드의 Worker 이름과 같아야 한다.
+name = "rollingpaperll"
 compatibility_date = "2026-11-01"
+
+[assets]
+directory = "./dist"
+# SPA: 없는 경로(/tree/..., /me 등)는 index.html 로 응답
+not_found_handling = "single-page-application"
