@@ -23,7 +23,7 @@ create table public.boards (
   owner_id  uuid references public.members(id) on delete cascade,
   is_group  boolean not null default false,
   title     text,
-  open_at   timestamptz not null default '2026-12-25 00:00:00+09',
+  open_at   timestamptz not null default '2026-11-30 19:00:00+09',
   constraint board_owner_or_group check (is_group or owner_id is not null)
 );
 create unique index boards_owner_unique on public.boards(owner_id) where not is_group;
@@ -59,7 +59,7 @@ create or replace function public.on_member_created() returns trigger
 language plpgsql security definer set search_path = public as $$
 begin
   insert into boards(owner_id, open_at)
-  values (new.id, coalesce((select max(open_at) from boards), '2026-12-25 00:00:00+09'));
+  values (new.id, coalesce((select max(open_at) from boards), '2026-11-30 19:00:00+09'));
   return new;
 end $$;
 create trigger trg_member_created after insert on public.members

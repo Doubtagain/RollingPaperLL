@@ -130,7 +130,7 @@ export default function TreePage() {
           <ErrorState onRetry={() => summary.refetch()} />
         ) : opened ? (
           <p className="rounded-2xl bg-white/5 px-4 py-4 text-sm text-snow-50/70 ring-1 ring-white/10">
-            선물은 크리스마스 전까지만 남길 수 있어요 🎄
+            선물은 수료식 전까지만 남길 수 있어요 🎄
             <br />
             남긴 카드는 {owner.name}님만 볼 수 있어요.
           </p>
@@ -154,7 +154,7 @@ export default function TreePage() {
           </Button>
         )}
         <p className="mt-3 text-xs text-snow-50/40">
-          다른 사람이 남긴 카드는 보이지 않아요. 트리 주인만 크리스마스에 열어볼 수 있어요.
+          다른 사람이 남긴 카드는 보이지 않아요. 트리 주인만 수료식 날 열어볼 수 있어요.
         </p>
       </section>
 
@@ -211,7 +211,7 @@ export default function TreePage() {
       <ConfirmModal
         open={confirmDelete}
         title="선물을 삭제할까요?"
-        description="삭제하면 되돌릴 수 없어요. 크리스마스 전까지 다시 남길 수 있어요."
+        description="삭제하면 되돌릴 수 없어요. 수료식 전까지 다시 남길 수 있어요."
         confirmText="삭제"
         danger
         onCancel={() => setConfirmDelete(false)}

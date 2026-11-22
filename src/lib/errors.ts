@@ -16,8 +16,8 @@ interface PgLikeError {
 
 /** SQL 함수에서 `raise exception 'BOARD_LOCKED'` 처럼 던지는 코드 */
 const RAISE_MESSAGES: Record<string, string> = {
-  BOARD_LOCKED: '선물은 크리스마스 전까지만 남길 수 있어요 🎄',
-  NOT_OPENED: '아직 선물을 열 수 없어요. 12월 25일을 기다려 주세요 🎅',
+  BOARD_LOCKED: '선물은 수료식 전까지만 남길 수 있어요 🎄',
+  NOT_OPENED: '아직 선물을 열 수 없어요. 수료식 날(11월 30일 저녁 7시)을 기다려 주세요 🎅',
   OWN_BOARD: '내 트리에는 선물을 남길 수 없어요',
   INVALID_INVITE: '초대코드를 다시 확인해 주세요 🎅',
   ALREADY_LINKED: '이미 다른 계정과 연결된 초대코드예요',

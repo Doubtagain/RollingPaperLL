@@ -1,7 +1,7 @@
 import type { CardDesign, Part } from '@/types/domain';
 
 /** 공개일 기본값 (실제 값은 DB boards.open_at / RPC 응답 기준) */
-export const DEFAULT_OPEN_AT = '2026-12-25T00:00:00+09:00';
+export const DEFAULT_OPEN_AT = '2026-11-30T19:00:00+09:00';
 
 export const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true';
 

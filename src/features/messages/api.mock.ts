@@ -53,7 +53,7 @@ export const mockMessagesApi: MessagesApi = {
     if (board.ownerId === me.id)
       throw new AppError('내 트리에는 선물을 남길 수 없어요', 'OWN_BOARD');
     if (mockDb.isOpened(board))
-      throw new AppError('선물은 크리스마스 전까지만 남길 수 있어요 🎄', 'BOARD_LOCKED');
+      throw new AppError('선물은 수료식 전까지만 남길 수 있어요 🎄', 'BOARD_LOCKED');
     const now = new Date().toISOString();
     const fields = {
       nickname: input.nickname,
@@ -91,7 +91,7 @@ export const mockMessagesApi: MessagesApi = {
     const board = msg && db.boards.find((b) => b.id === msg.boardId);
     if (!msg || !board) throw new AppError('볼 수 없거나 할 수 없는 작업이에요 🔒', '42501');
     if (mockDb.isOpened(board))
-      throw new AppError('선물은 크리스마스 전까지만 남길 수 있어요 🎄', 'BOARD_LOCKED');
+      throw new AppError('선물은 수료식 전까지만 남길 수 있어요 🎄', 'BOARD_LOCKED');
     db.messages = db.messages.filter((m) => m.id !== id);
     mockDb.save();
   },

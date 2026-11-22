@@ -33,7 +33,7 @@ export default function LoginPage() {
         <p className="mt-3 text-sm text-snow-50/70">
           서로의 트리에 선물을 걸어 주세요.
           <br />
-          선물은 <strong className="text-gold-400">12월 25일</strong>에 열려요 🎁
+          선물은 <strong className="text-gold-400">11월 30일 수료식 저녁 7시</strong>에 열려요 🎁
         </p>
       </div>
 

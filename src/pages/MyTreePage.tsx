@@ -73,7 +73,7 @@ function LockedView({ count, openAt }: { count: number; openAt: string }) {
             key={i}
             type="button"
             className="w-10"
-            aria-label="선물 상자 (12월 25일에 열 수 있어요)"
+            aria-label="선물 상자 (수료식 날 열 수 있어요)"
             animate={
               reduced
                 ? undefined

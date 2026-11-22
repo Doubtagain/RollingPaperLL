@@ -37,7 +37,7 @@ export function CountdownBanner({ openAt, opened, size = 'banner', className }: 
     ];
     return (
       <div className={cn('text-center', className)}>
-        <p className="mb-3 text-sm text-snow-50/70">크리스마스까지</p>
+        <p className="mb-3 text-sm text-snow-50/70">수료식까지</p>
         <div className="flex justify-center gap-2" aria-live="off">
           {cells.map(([v, label]) => (
             <div key={label} className="w-[68px] rounded-2xl bg-white/10 py-3 ring-1 ring-white/10">
@@ -58,7 +58,7 @@ export function CountdownBanner({ openAt, opened, size = 'banner', className }: 
         className,
       )}
     >
-      <span>🎄 크리스마스까지</span>
+      <span>🎓 수료식까지</span>
       <strong className="font-extrabold text-gold-400">D-{days}</strong>
       <span className="tabular-nums text-snow-50/80">
         · {pad2(hours)}:{pad2(minutes)}:{pad2(seconds)}
