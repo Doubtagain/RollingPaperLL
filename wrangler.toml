@@ -1,0 +1,4 @@
+# Cloudflare Pages 설정 (wrangler pages deploy 또는 Git 연동 시 참조)
+name = "rollingpaper-ll"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-11-01"
