@@ -8,7 +8,7 @@ import { Spinner } from '@/components/ui/Spinner';
 import { toast } from '@/components/ui/Toast';
 import { PART_LABEL, PARTS } from '@/lib/constants';
 import { toAppError } from '@/lib/errors';
-import type { Role } from '@/types/domain';
+import type { AdminMember, Role } from '@/types/domain';
 import { generateInviteCode } from './api';
 import { useAdminMembers, useCreateMember, useUpdateRole } from './hooks';
 
@@ -27,6 +27,28 @@ async function copy(text: string) {
   } catch {
     toast.error('복사하지 못했어요');
   }
+}
+
+/** 엑셀에서 한글이 깨지지 않도록 UTF-8 BOM 을 붙인 CSV 로 내려받기 */
+function downloadInviteCsv(members: AdminMember[]) {
+  const esc = (v: string | number) => `"${String(v).replace(/"/g, '""')}"`;
+  const header = ['이름', '파트', '기수', '역할', '초대코드', '연결 여부'];
+  const rows = members.map((m) => [
+    m.name,
+    PART_LABEL[m.part],
+    m.generation,
+    m.role === 'admin' ? '관리자' : '멤버',
+    m.inviteCode,
+    m.linked ? '연결됨' : '미연결',
+  ]);
+  const csv = [header, ...rows].map((r) => r.map(esc).join(',')).join('\r\n');
+  const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `초대코드_${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 export function MemberManager() {
@@ -99,7 +121,18 @@ export function MemberManager() {
           추가
         </Button>
       </form>
-      <p className="text-xs text-snow-50/50">초대코드는 추가할 때 자동으로 만들어져요.</p>
+      <div className="flex items-center justify-between gap-2">
+        <p className="text-xs text-snow-50/50">초대코드는 추가할 때 자동으로 만들어져요.</p>
+        <Button
+          type="button"
+          variant="secondary"
+          size="sm"
+          disabled={!members.data?.length}
+          onClick={() => members.data && downloadInviteCsv(members.data)}
+        >
+          📥 엑셀로 내려받기
+        </Button>
+      </div>
 
       {members.isPending ? (
         <Spinner />
